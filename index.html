@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qiddiya Car Park — Package 2 | Project Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#05070D;
+  --panel: rgba(255,255,255,0.038);
+  --panel-solid:#0E1220;
+  --border: rgba(255,255,255,0.09);
+  --border-soft: rgba(255,255,255,0.055);
+  --text:#EEF2F9;
+  --text-dim:#9AA5B8;
+  --text-faint:#5B6577;
+  --cyan:#2DD4E8;
+  --violet:#9B7BF5;
+  --amber:#FBBF54;
+  --emerald:#3ADDA0;
+  --rose:#FF7A93;
+  --sky:#5EA8FF;
+  --grad1: var(--cyan);
+  --grad2: var(--violet);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(1100px 620px at 88% -8%, rgba(155,123,245,0.16), transparent 60%),
+    radial-gradient(900px 560px at 6% 8%, rgba(45,212,232,0.10), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  min-height:100vh;
+  padding:20px clamp(14px,3vw,44px) 70px;
+}
+.disp{font-family:'Space Grotesk',sans-serif;}
+.mono{font-family:'JetBrains Mono',monospace;}
+
+/* ================= top header ================= */
+.topbar{
+  display:flex; align-items:center; gap:20px;
+  background:var(--panel); border:1px solid var(--border); border-radius:16px;
+  padding:16px 24px; backdrop-filter:blur(18px);
+}
+.brand-logo-img{height:44px; width:auto; display:block; flex:none;}
+.brand-txt{display:flex; flex-direction:column; line-height:1.15; padding-right:20px; border-right:1px solid var(--border-soft); flex:none;}
+.brand-txt .co{font-family:'Space Grotesk'; font-weight:700; font-size:15px; letter-spacing:.01em;}
+.brand-txt .sub{font-size:10.5px; color:var(--text-faint); letter-spacing:.06em; margin-top:2px;}
+.title-block{flex:1; min-width:200px;}
+.title-block h1{font-family:'Space Grotesk'; font-weight:700; font-size:clamp(19px,2.2vw,25px); margin:0;}
+.title-block .path{font-size:12.5px; color:var(--text-dim); margin-top:3px;}
+.title-block .path b{color:var(--cyan); font-weight:600;}
+.datebadge{background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:11px; padding:9px 18px; text-align:center; min-width:150px;}
+.datebadge .lbl{font-size:9px; letter-spacing:.12em; color:var(--text-faint);}
+.datebadge .val{font-family:'JetBrains Mono'; font-weight:600; font-size:14.5px; margin-top:3px;}
+
+/* ================= tabs ================= */
+.tabnav{display:flex; gap:4px; margin:20px 0 16px; background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:5px; width:fit-content;}
+.tabnav button{
+  font-family:'Space Grotesk'; font-weight:600; font-size:14.5px; color:var(--text-dim);
+  background:none; border:none; cursor:pointer; padding:9px 20px; border-radius:9px; transition:all .18s;
+}
+.tabnav button:hover{color:var(--text);}
+.tabnav button.active{color:#04060B; background:linear-gradient(120deg,var(--cyan),var(--violet));}
+
+.view{display:none;}
+.view.active{display:block; animation:fadeUp .35s ease;}
+@keyframes fadeUp{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+/* ================= filter bar ================= */
+.filterbar{
+  display:flex; flex-wrap:wrap; align-items:flex-end; gap:14px;
+  background:var(--panel); border:1px solid var(--border); border-radius:14px;
+  padding:16px 20px; margin-bottom:16px; backdrop-filter:blur(18px);
+}
+.filterbar .fgroup{display:flex; flex-direction:column; gap:6px; min-width:170px;}
+.filterbar label{font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); font-weight:600;}
+.filterbar select{
+  appearance:none; -webkit-appearance:none;
+  background:rgba(255,255,255,0.045) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6"><path d="M0 0l5 6 5-6z" fill="%239AA5B8"/></svg>') no-repeat right 12px center;
+  border:1px solid var(--border); color:var(--text); font-family:'Inter'; font-size:13.5px; font-weight:500;
+  border-radius:9px; padding:9px 32px 9px 12px; cursor:pointer; min-width:170px; transition:border-color .15s;
+}
+.filterbar select:hover, .filterbar select:focus{border-color:var(--cyan); outline:none;}
+.filterbar .spacer{flex:1;}
+.resultpill{
+  font-family:'JetBrains Mono'; font-size:12.5px; background:rgba(45,212,232,0.1); color:var(--cyan);
+  border:1px solid rgba(45,212,232,0.3); border-radius:20px; padding:8px 16px; white-space:nowrap;
+}
+.resetbtn{
+  font-family:'Inter'; font-weight:600; font-size:13px; color:var(--text-dim); background:rgba(255,255,255,0.04);
+  border:1px solid var(--border); border-radius:9px; padding:9px 16px; cursor:pointer; transition:all .15s;
+}
+.resetbtn:hover{color:var(--text); border-color:var(--rose); background:rgba(255,122,147,0.08);}
+
+/* ================= panels & grid ================= */
+.panel{background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:18px 20px; backdrop-filter:blur(18px); position:relative;}
+.panel-head{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px;}
+.panel-head h3{font-family:'Space Grotesk'; font-weight:600; font-size:14.5px; letter-spacing:.01em; color:var(--text); margin:0;}
+.panel-head .tag{font-size:10.5px; color:var(--text-faint); font-family:'JetBrains Mono';}
+.grid{display:grid; gap:16px;}
+
+/* ================= KPI cards ================= */
+.kpi-row{grid-template-columns:repeat(4,1fr); margin-bottom:16px;}
+.kpi{
+  background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:16px 18px;
+  position:relative; overflow:hidden;
+}
+.kpi::before{content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--k, var(--cyan));}
+.kpi .lbl{font-size:11px; color:var(--text-dim); letter-spacing:.02em; font-weight:500;}
+.kpi .val{font-family:'JetBrains Mono'; font-weight:700; font-size:28px; margin-top:8px; color:var(--text);}
+.kpi .sub{font-size:11px; color:var(--text-faint); margin-top:5px;}
+.kpi .sub b{color:var(--k,var(--cyan));}
+
+/* ================= gauges ================= */
+.gauges-row{grid-template-columns:repeat(6,1fr); margin-bottom:16px;}
+.gcard{background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:14px 8px; text-align:center;}
+.gcard .name{font-family:'Space Grotesk'; font-weight:600; font-size:12.5px; color:var(--text-dim); letter-spacing:.01em;}
+.ring-wrap{position:relative; width:88px; height:88px; margin:10px auto 4px;}
+.ring{width:100%; height:100%; border-radius:50%; transition:background 1s ease;}
+.ring-center{position:absolute; inset:9px; border-radius:50%; background:var(--panel-solid); display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono'; font-weight:700; font-size:16px;}
+.gcard .range{display:flex; justify-content:space-between; font-size:9px; font-family:'JetBrains Mono'; color:var(--text-faint); padding:0 8px;}
+
+.hero-ring-wrap{width:168px; height:168px; margin:6px auto;}
+.hero-ring-wrap .ring-center{inset:16px;}
+.hero-ring-wrap .pct{font-size:32px;}
+
+/* ================= two-col chart area ================= */
+.two-col{grid-template-columns:1.35fr 1fr; margin-bottom:16px;}
+.chart-box{height:230px; position:relative;}
+.legend-list{display:flex; flex-direction:column; gap:9px; margin-top:14px;}
+.legend-list .row{display:flex; align-items:center; gap:9px; font-size:12.5px;}
+.legend-list .dot{width:9px; height:9px; border-radius:3px; flex:none;}
+.legend-list .lab{flex:1; color:var(--text-dim);}
+.legend-list .num{font-family:'JetBrains Mono'; font-weight:600;}
+
+/* ================= tables ================= */
+table.datatable{width:100%; border-collapse:collapse; font-size:13px;}
+table.datatable th{
+  text-align:left; font-family:'Space Grotesk'; font-weight:600; letter-spacing:.02em; font-size:11.5px;
+  color:var(--text-faint); border-bottom:1px solid var(--border); padding:9px 10px; text-transform:uppercase;
+}
+table.datatable td{padding:9px 10px; border-bottom:1px solid var(--border-soft); vertical-align:middle; color:var(--text-dim);}
+table.datatable td.num{font-family:'JetBrains Mono'; text-align:right; color:var(--text);}
+table.datatable tr:hover td{background:rgba(255,255,255,0.02);}
+.mini-bar{height:6px; width:100%; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden;}
+.mini-bar>div{height:100%; border-radius:3px;}
+.badge{font-family:'JetBrains Mono'; font-size:10.5px; padding:3px 9px; border-radius:20px; display:inline-block; font-weight:600;}
+
+/* ================= heatmap ================= */
+.heatmap{width:100%; border-collapse:collapse; font-size:12.5px;}
+.heatmap th{font-family:'Space Grotesk'; font-weight:600; text-transform:uppercase; letter-spacing:.02em; font-size:10.5px; color:var(--text-faint); padding:9px; border-bottom:1px solid var(--border); text-align:center;}
+.heatmap th:first-child{text-align:left;}
+.heatmap td{padding:9px; text-align:center; border-bottom:1px solid var(--border-soft); font-family:'JetBrains Mono'; font-weight:600; border-radius:6px;}
+.heatmap td.item-name{text-align:left; font-family:'Inter'; font-weight:500; color:var(--text-dim);}
+
+.footer-note{margin-top:26px; font-size:11.5px; color:var(--text-faint); line-height:1.7; border-top:1px solid var(--border-soft); padding-top:16px;}
+.footer-note .k{color:var(--emerald);} .footer-note .a{color:var(--amber);} .footer-note .r{color:var(--rose);}
+
+.section-divider{display:flex; align-items:center; gap:16px; margin:28px 0 16px;}
+.section-divider .divider-line{flex:1; height:1px; background:linear-gradient(90deg, transparent, var(--border), transparent);}
+.section-divider .divider-label{font-family:'Space Grotesk'; font-weight:600; font-size:15px; letter-spacing:.03em; color:var(--text); white-space:nowrap; padding:6px 18px; background:var(--panel); border:1px solid var(--border); border-radius:20px;}
+
+@media(max-width:1150px){
+  .kpi-row{grid-template-columns:repeat(2,1fr);}
+  .gauges-row{grid-template-columns:repeat(3,1fr);}
+  .two-col{grid-template-columns:1fr;}
+}
+@media(max-width:640px){
+  .kpi-row, .gauges-row{grid-template-columns:repeat(2,1fr);}
+  .topbar{flex-wrap:wrap;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <img id="cfgLogo" class="brand-logo-img" src="logo.png" alt="Company logo">
+  <div class="brand-txt">
+    <div class="sub" id="cfgOrgDivision">CIVIL WORKS DIVISION</div>
+  </div>
+  <div class="title-block">
+    <h1 id="cfgProjectTitle">Qiddiya Car Park — Package 2</h1>
+    <div class="path" id="cfgTagline">Project Intelligence Dashboard · <b>fully interactive</b> — filter live across tracked submittals</div>
+  </div>
+  <div class="datebadge">
+    <div class="lbl">TODAY</div>
+    <div class="val" id="reportDate">—</div>
+    <div class="lbl" id="dataAsOf" style="margin-top:5px;">—</div>
+  </div>
+</div>
+
+<!-- ============================= SUBMITTALS, SCHEDULE & CONCRETE ============================= -->
+<div class="view active" id="view-submittals">
+
+  <div class="filterbar">
+    <div class="fgroup"><label>Discipline</label><select id="f-disc"><option value="-1">All disciplines</option></select></div>
+    <div class="fgroup"><label>Document Type</label><select id="f-doctype"><option value="-1">All document types</option></select></div>
+    <div class="fgroup"><label>Status</label><select id="f-status"><option value="-1">All statuses</option></select></div>
+    <div class="fgroup"><label>Location / Area</label><select id="f-zone"><option value="-1">All locations</option></select></div>
+    <div class="spacer"></div>
+    <button class="resetbtn" id="resetSub">Reset filters</button>
+    <span class="resultpill" id="resultPill">2,096 of 2,096</span>
+  </div>
+
+  <div class="grid kpi-row">
+
+    <div class="kpi" style="--k:var(--cyan)"><div class="lbl">Filtered submissions</div><div class="val" id="k-total">0</div><div class="sub" id="k-total-sub">—</div></div>
+    <div class="kpi" style="--k:var(--emerald)"><div class="lbl">Approval rate</div><div class="val" id="k-approval">0%</div><div class="sub">Approved + Approved w/ comments</div></div>
+    <div class="kpi" style="--k:var(--amber)"><div class="lbl">Open / Pending</div><div class="val" id="k-pending">0</div><div class="sub" id="k-pending-sub">—</div></div>
+    <div class="kpi" style="--k:var(--rose)"><div class="lbl">Revise &amp; resubmit</div><div class="val" id="k-revise">0</div><div class="sub">Rejected, needs resubmission</div></div>
+  </div>
+
+  <div class="grid" style="grid-template-columns:1fr 2fr; margin-bottom:16px;">
+    <div class="panel" style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
+      <div class="panel-head" style="width:100%;"><h3>Overall Schedule Progress</h3></div>
+      <div class="ring-wrap hero-ring-wrap"><div class="ring" id="progressRing" style="--c1:var(--cyan); --c2:var(--violet);"></div><div class="ring-center"><span class="pct mono" id="progressPct">0%</span></div></div>
+      <div style="display:flex; gap:26px; font-family:'JetBrains Mono'; font-size:12px; margin-top:6px;">
+        <div style="text-align:center;"><div style="color:var(--text-faint); font-size:9px; letter-spacing:.08em;">PLAN</div><div id="planPct">—</div></div>
+        <div style="text-align:center;"><div style="color:var(--text-faint); font-size:9px; letter-spacing:.08em;">WEEKLY</div><div id="weeklyPct">—</div></div>
+        <div style="text-align:center;"><div style="color:var(--text-faint); font-size:9px; letter-spacing:.08em;">VARIANCE</div><div id="variancePct">—</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="grid gauges-row" id="smallGauges" style="margin-bottom:6px;"></div>
+      <div style="text-align:right; font-size:10.5px; color:var(--text-faint);" id="gaugeContextNote"></div>
+    </div>
+  </div>
+
+  <div class="grid two-col">
+    <div class="panel">
+      <div class="panel-head"><h3>Work Inspection Requests by discipline</h3><span class="tag">respects Status/Location filters</span></div>
+      <div class="chart-box"><canvas id="wirChart"></canvas></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h3>Submittal status mix</h3><span class="tag" id="statusTag">of 2,096</span></div>
+      <div class="chart-box"><canvas id="statusChart"></canvas></div>
+      <div class="legend-list" id="statusLegend"></div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-bottom:16px;">
+    <div class="panel-head"><h3>Monthly submission volume &amp; cumulative trend</h3><span class="tag">reactive to filters</span></div>
+    <div class="chart-box" style="height:260px;"><canvas id="trendChart"></canvas></div>
+  </div>
+
+  <div class="section-divider">
+    <span class="divider-line"></span>
+    <span class="divider-label">Concrete Works</span>
+    <span class="divider-line"></span>
+  </div>
+
+  <div class="filterbar">
+    <div class="fgroup"><label>Concrete Type</label><select id="f-contype"><option value="-1">All types</option></select></div>
+    <div class="spacer"></div>
+    <span class="resultpill" id="concreteResultPill">9 of 9 items</span>
+  </div>
+
+  <div class="grid kpi-row">
+    <div class="kpi" style="--k:var(--emerald)"><div class="lbl">Concrete progress <span class="mono" style="color:var(--text-faint)">(cutoff <span id="cutoffDate"></span>)</span></div><div class="val" id="concretePct">0%</div></div>
+    <div class="kpi" style="--k:var(--sky)"><div class="lbl">Total BOQ quantity</div><div class="val" id="boqTotal">0</div><div class="sub">m³, excl. provisional sum</div></div>
+    <div class="kpi" style="--k:var(--amber)"><div class="lbl">Actual poured</div><div class="val" id="actualTotal">0</div><div class="sub">m³ to date</div></div>
+    <div class="kpi" style="--k:var(--rose)"><div class="lbl">Remaining</div><div class="val" id="remainingTotal">0</div><div class="sub">m³ outstanding</div></div>
+  </div>
+
+  <div class="panel" style="margin-bottom:16px;">
+    <div class="panel-head"><h3>Pouring progress by BOQ item</h3><span class="tag">m³ · BOQ vs Actual poured, with % complete</span></div>
+    <div class="chart-box" style="height:280px;"><canvas id="concreteChart"></canvas></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>Item detail</h3></div>
+    <table class="datatable">
+      <thead><tr><th>Type</th><th>BOQ Item</th><th style="text-align:right">BOQ Qty (m³)</th><th style="text-align:right">Budget Qty (m³)</th><th style="text-align:right">Actual Poured (m³)</th><th>Progress</th></tr></thead>
+      <tbody id="concreteTableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============================= MOBILIZATION ============================= -->
+
+<div class="footer-note">
+  Live filters recompute every KPI, chart and table client-side from the underlying submittal log and concrete QS — no server round-trip. This is a static export of the source data; regenerate it whenever the source files are refreshed. Colour key: <span class="k">green = on track</span> · <span class="a">amber = watch</span> · <span class="r">red = needs attention</span>.
+</div>
+
+<script src="chart.umd.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
